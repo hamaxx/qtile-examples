@@ -1,0 +1,5 @@
+[GNOME Session]
+Name=Qtile session
+RequiredComponents=gnome-settings-daemon;
+RequiredProviders=windowmanager;
+DefaultProvider-windowmanager=qtile

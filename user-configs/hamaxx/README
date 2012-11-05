@@ -1,0 +1,5 @@
+/usr/share/xsessions/gnome-qtile.desktop
+/usr/share/gnome-session/sessions/qtile.session
+/usr/share/applications/qtile.desktop
+
+/home/ham/.config/qtile/config.py
