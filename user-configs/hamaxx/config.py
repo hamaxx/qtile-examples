@@ -39,6 +39,8 @@ keys = [
 	Key([mod, "shift"], "space", lazy.layout.toggle_split()),
 	#Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
 
+	Key([mod], "t", lazy.window.disable_floating()),
+
 	# interact with prompts
 	Key([mod], "r", lazy.spawncmd()),
 	Key([mod], "g", lazy.switchgroup()),
@@ -61,6 +63,10 @@ keys = [
 		[], "XF86AudioMute",
 		lazy.spawn("amixer -c 0 -q set Master toggle")
 	),
+
+	Key([mod, 'control'], 'l', lazy.spawn('/usr/bin/gnome-screensaver-command -l')),
+	Key([mod, 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --logout --no-prompt')),
+	Key([mod, 'shift', 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --power-off')),
 ]
 
 # This allows you to drag windows around with the mouse if you want.
@@ -71,10 +77,6 @@ mouse = [
 		start=lazy.window.get_size()),
 	Click([mod], "Button2", lazy.window.bring_to_front())
 ]
-
-Key([mod, 'control'], 'l', lazy.spawn('/usr/bin/gnome-screensaver-command -l')),
-Key([mod, 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --logout --no-prompt')),
-Key([mod, 'shift', 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --power-off')),
 
 floating_layout = layout.Floating(
 		border_width=0
