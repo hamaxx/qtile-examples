@@ -19,7 +19,7 @@ mod1 = "mod4"
 
 keys = [
 	Key([mod], "space", lazy.nextlayout()),
-	Key([mod, 'shift'], "q", lazy.window.kill()),
+	Key([mod, 'shift'], "c", lazy.window.kill()),
 
 	Key([mod], "k", lazy.layout.down()),
 	Key([mod], "j", lazy.layout.up()),
