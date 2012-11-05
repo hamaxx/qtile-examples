@@ -21,23 +21,23 @@ keys = [
 	Key([mod], "space", lazy.nextlayout()),
 	Key([mod, 'shift'], "q", lazy.window.kill()),
 
-    Key([mod], "k", lazy.layout.down()),
-    Key([mod], "j", lazy.layout.up()),
+	Key([mod], "k", lazy.layout.down()),
+	Key([mod], "j", lazy.layout.up()),
 
-    Key([mod], "l", lazy.layout.previous()),
-    Key([mod], "h", lazy.layout.next()),
+	Key([mod], "l", lazy.layout.previous()),
+	Key([mod], "h", lazy.layout.next()),
 
-    Key([mod, 'shift'], "k", lazy.layout.grow()),
-    Key([mod, 'shift'], "j", lazy.layout.shrink()),
+	Key([mod, 'shift'], "k", lazy.layout.grow()),
+	Key([mod, 'shift'], "j", lazy.layout.shrink()),
 
-    Key([mod], "n", lazy.layout.normalize()),
-    Key([mod], "o", lazy.layout.maximize()),
+	Key([mod], "n", lazy.layout.normalize()),
+	Key([mod], "o", lazy.layout.maximize()),
 
-    Key([mod], "Tab", lazy.layout.down()),
+	Key([mod], "Tab", lazy.layout.down()),
 
-    Key([mod], "Return", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "space", lazy.layout.toggle_split()),
-    #Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
+	Key([mod], "Return", lazy.layout.shuffle_down()),
+	Key([mod, "shift"], "space", lazy.layout.toggle_split()),
+	#Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
 
 	# interact with prompts
 	Key([mod], "r", lazy.spawncmd()),
@@ -76,6 +76,16 @@ Key([mod, 'control'], 'l', lazy.spawn('/usr/bin/gnome-screensaver-command -l')),
 Key([mod, 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --logout --no-prompt')),
 Key([mod, 'shift', 'control'], 'q', lazy.spawn('/usr/bin/gnome-session-quit --power-off')),
 
+floating_layout = layout.Floating(
+		border_width=0
+		,max_border_width=0
+		,fullscreen_border_width=0
+)
+@hook.subscribe.client_new
+def floats(window):
+	if(window.window.get_wm_type() == "dialog" or window.window.get_wm_transient_for()):
+		window.floating = True
+
 # Next, we specify group names, and use the group name list to generate an appropriate
 # set of bindings for group switching.
 groups = []
@@ -90,7 +100,7 @@ for i in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
 
 # Two basic layouts.
 layouts = [
-    layout.MonadTall(border_width=1, border_focus='#4444bb'),
-    layout.Stack(border_width=1, border_focus='#4444bb'),
+	layout.MonadTall(border_width=1, border_focus='#4444bb'),
+	layout.Stack(border_width=1, border_focus='#4444bb'),
 	layout.Max(),
 ]
