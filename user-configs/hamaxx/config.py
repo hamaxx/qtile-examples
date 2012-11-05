@@ -24,6 +24,9 @@ keys = [
     Key([mod], "k", lazy.layout.down()),
     Key([mod], "j", lazy.layout.up()),
 
+    Key([mod], "l", lazy.layout.previous()),
+    Key([mod], "h", lazy.layout.next()),
+
     Key([mod, 'shift'], "k", lazy.layout.grow()),
     Key([mod, 'shift'], "j", lazy.layout.shrink()),
 
@@ -33,8 +36,8 @@ keys = [
     Key([mod], "Tab", lazy.layout.down()),
 
     Key([mod], "Return", lazy.layout.shuffle_down()),
+    Key([mod, "shift"], "space", lazy.layout.toggle_split()),
     #Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
-    #Key([mod, "shift"], "space", lazy.layout.flip()),
 
 	# interact with prompts
 	Key([mod], "r", lazy.spawncmd()),
@@ -88,5 +91,6 @@ for i in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
 # Two basic layouts.
 layouts = [
     layout.MonadTall(border_width=1, border_focus='#4444bb'),
+    layout.Stack(border_width=1, border_focus='#4444bb'),
 	layout.Max(),
 ]
