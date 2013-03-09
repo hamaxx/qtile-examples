@@ -7,16 +7,19 @@ from libqtile import layout, bar, widget, hook
 os.system("wmname compiz")
 
 screens = [Screen(top = bar.Bar([
-		widget.GroupBox(urgent_alert_method='text'),
+		widget.GroupBox(urgent_alert_method='text', padding=1, borderwidth=1),
 
 		widget.Prompt(),
+		widget.Notify(),
 
-		widget.WindowName(),
-		widget.Volume(),
+		widget.WindowName(fontsize=14, padding=10, foreground='dddddd'),
+
+		widget.Battery(fontsize=14, foreground='dddddd'),
 		widget.Systray(),
-		widget.Clock('%Y-%m-%d %a %I:%M %p'),
-	], 24)) # our bar is 30px high
+		widget.Clock('%Y-%m-%d %a %I:%M %p', fontsize=14, foreground='dddddd'),
+	], 20))
 ]
+dmenu = 'dmenu_run -i -b -p ">>>" -fn "Open Sans-10" -nb "#000" -nf "#fff" -sb "#15181a" -sf "#fff"'
 
 mod = "mod1"
 mod1 = "mod4"
@@ -50,6 +53,7 @@ keys = [
 
 	# interact with prompts
 	Key([mod], "r", lazy.spawncmd()),
+	Key([mod], 'f', lazy.spawn(dmenu)),
 	Key([mod], "g", lazy.switchgroup()),
 
 	# start specific apps
@@ -83,6 +87,7 @@ mouse = [
 	Drag([mod], "Button3", lazy.window.set_size_floating(),
 		start=lazy.window.get_size()),
 	Click([mod], "Button2", lazy.window.bring_to_front())
+	# TODO always front
 ]
 
 floating_layout = layout.Floating(
@@ -94,7 +99,8 @@ floating_layout = layout.Floating(
 def floats(window):
 	if(window.window.get_wm_type() == "dialog" or window.window.get_wm_transient_for()):
 		window.floating = True
-
+	if (window.name == 'Desktop'):
+		window.minimized = True
 
 # Next, we specify group names, and use the group name list to generate an appropriate
 # set of bindings for group switching.
@@ -111,6 +117,5 @@ for i in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
 # Two basic layouts.
 layouts = [
 	layout.MonadTall(border_width=1, border_focus='#4444bb'),
-	layout.Stack(border_width=1, border_focus='#4444bb'),
 	layout.Max(),
 ]
