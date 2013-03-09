@@ -1,6 +1,10 @@
-from libqtile.manager import Key, Screen, Group, Drag, Click
+import os
+
+from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
+
+os.system("wmname compiz")
 
 screens = [Screen(top = bar.Bar([
 		widget.GroupBox(urgent_alert_method='text'),
@@ -38,6 +42,9 @@ keys = [
 	Key([mod], "Return", lazy.layout.shuffle_down()),
 	Key([mod, "shift"], "space", lazy.layout.toggle_split()),
 	#Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
+
+    Key([mod], "w", lazy.to_screen(0)),
+    Key([mod], "e", lazy.to_screen(1)),
 
 	Key([mod], "t", lazy.window.disable_floating()),
 
@@ -87,6 +94,7 @@ floating_layout = layout.Floating(
 def floats(window):
 	if(window.window.get_wm_type() == "dialog" or window.window.get_wm_transient_for()):
 		window.floating = True
+
 
 # Next, we specify group names, and use the group name list to generate an appropriate
 # set of bindings for group switching.
