@@ -19,10 +19,20 @@ screens = [Screen(top = bar.Bar([
 		widget.Clock('%Y-%m-%d %a %I:%M %p', fontsize=14, foreground='dddddd'),
 	], 20))
 ]
-dmenu = 'dmenu_run -i -b -p ">>>" -fn "Open Sans-10" -nb "#000" -nf "#fff" -sb "#15181a" -sf "#fff"'
+
+dmenu = 'dmenu_run -i -b -p ">>>" -fn "Ariel" -nb "#000" -nf "#fff" -sb "#15181a" -sf "#fff"'
 
 mod = "mod1"
 mod1 = "mod4"
+
+def cmd_renamegroup(manager):
+	def f(name):
+		del manager.groupMap[manager.currentGroup.name]
+		manager.currentGroup.name = name
+		manager.groupMap[name] = manager.currentGroup
+
+	prompt = manager.widgetMap.get('prompt')
+	prompt.startInput('name: ', f, "group", strict_completer=True)
 
 keys = [
 	Key([mod], "space", lazy.nextlayout()),
@@ -54,7 +64,9 @@ keys = [
 	# interact with prompts
 	Key([mod], "r", lazy.spawncmd()),
 	Key([mod], 'f', lazy.spawn(dmenu)),
-	Key([mod], "g", lazy.switchgroup()),
+
+	Key([mod],  "g", lazy.switchgroup()),
+	Key([mod, "shift"], "g", lazy.function(cmd_renamegroup)),
 
 	# start specific apps
 	Key([mod, 'shift'], "Return", lazy.spawn("gnome-terminal")),
@@ -105,13 +117,13 @@ def floats(window):
 # Next, we specify group names, and use the group name list to generate an appropriate
 # set of bindings for group switching.
 groups = []
-for i in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
-	groups.append(Group(i))
+for kbs, name in (("quoteleft", "home"), ("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"),):
+	groups.append(Group(name))
 	keys.append(
-		Key([mod], i, lazy.group[i].toscreen())
+		Key([mod], kbs, lazy.group[name].toscreen())
 	)
 	keys.append(
-		Key([mod, 'shift'], i, lazy.window.togroup(i))
+		Key([mod, 'shift'], kbs, lazy.window.togroup(name))
 	)
 
 # Two basic layouts.
