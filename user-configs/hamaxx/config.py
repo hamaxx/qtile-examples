@@ -25,15 +25,6 @@ dmenu = 'dmenu_run -i -b -p ">>>" -fn "Ariel" -nb "#000" -nf "#fff" -sb "#15181a
 mod = "mod1"
 mod1 = "mod4"
 
-def cmd_renamegroup(manager):
-	def f(name):
-		del manager.groupMap[manager.currentGroup.name]
-		manager.currentGroup.name = name
-		manager.groupMap[name] = manager.currentGroup
-
-	prompt = manager.widgetMap.get('prompt')
-	prompt.startInput('name: ', f, "group", strict_completer=True)
-
 keys = [
 	Key([mod], "space", lazy.nextlayout()),
 	Key([mod, 'shift'], "c", lazy.window.kill()),
@@ -65,8 +56,8 @@ keys = [
 	Key([mod], "r", lazy.spawncmd()),
 	Key([mod], 'f', lazy.spawn(dmenu)),
 
-	Key([mod],  "g", lazy.switchgroup()),
-	Key([mod, "shift"], "g", lazy.function(cmd_renamegroup)),
+	Key([mod], "slash", lazy.magicsearch()),
+	Key([mod], "g", lazy.add_alias_to_group()),
 
 	# start specific apps
 	Key([mod, 'shift'], "Return", lazy.spawn("gnome-terminal")),
